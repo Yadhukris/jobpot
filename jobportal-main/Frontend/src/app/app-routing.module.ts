@@ -10,6 +10,7 @@ import { EditFacultyComponent } from './edit-faculty/edit-faculty.component';
 import { EmployerHomeComponent } from './employer-home/employer-home.component';
 import { EmployerLoginComponent } from './employer-login/employer-login.component';
 import { EmployerComponent } from './employer/employer.component';
+import { UpdateAlumniComponent } from './update-alumni/update-alumni.component';
 
 import { IndexComponent } from './index/index.component';
 import { NavbarComponent } from './navbar/navbar.component';
@@ -26,7 +27,8 @@ const routes: Routes = [
   {path:"employer/home",component:EmployerHomeComponent},
   {path:"admin/editfaculty",component:EditFacultyComponent},
 
-  {path:"alumni/home",component:AlumniHomeComponent}
+  {path:"alumni/home",component:AlumniHomeComponent},
+  {path:'alumni/update',component:UpdateAlumniComponent}
 
 
 ];

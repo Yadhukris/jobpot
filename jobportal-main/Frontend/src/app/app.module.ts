@@ -29,6 +29,7 @@ import { AlumniHomeComponent } from './alumni-home/alumni-home.component';
 import { AlumniService } from './alumni.service';
 import { AuthService } from './auth.service';
 import { AuthGuard } from './auth.guard';
+import { UpdateAlumniComponent } from './update-alumni/update-alumni.component';
 
 @NgModule({
   declarations: [
@@ -49,7 +50,8 @@ import { AuthGuard } from './auth.guard';
     FacultyHomeComponent,
     AddFacultyComponent,
     EditFacultyComponent,
-    AlumniHomeComponent
+    AlumniHomeComponent,
+    UpdateAlumniComponent
   ],
   imports: [
     BrowserModule,

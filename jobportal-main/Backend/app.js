@@ -51,7 +51,7 @@ app.post("/faculty/login", async (req, res) => {
     const password = req.body.password;
     const udata = await Facultydata.findOne({ email: email })
 
-   
+
 
     if (email === admin && password === adminPwd) {
 
@@ -59,10 +59,10 @@ app.post("/faculty/login", async (req, res) => {
     }
     else if (udata == null) {
         return res.status(404).send("userdata not present");
-    } 
+    }
 
-   
-     else if (udata.email === email && udata.password === password) {
+
+    else if (udata.email === email && udata.password === password) {
 
         res.status(200).send({ email });
     }
@@ -124,6 +124,7 @@ app.post('/insert', function (req, res) {
         password: req.body.alumni.password,
         hq: req.body.alumni.hq,
         city: req.body.alumni.city,
+        alumniid:req.body.alumni._id
 
 
     }
@@ -141,11 +142,12 @@ app.post('/insert', function (req, res) {
 //       });
 //  })
 
-//alumni login
-app.post('/login', async(req, res) => {
-    const userrole = 0;
+//alumni
+app.post('/login', async (req, res) => {
+    // const userrole = 0;
     const email = req.body.email;
     const password = req.body.password;
+    const id = req.params._id
     const udata = await alumnidata.findOne({ email: email })
 
 
@@ -153,58 +155,69 @@ app.post('/login', async(req, res) => {
         return res.status(404).send("userdata not present");
     }
 
- if(udata.email === email && udata.password === password) {
-
-    let payload = { subject: email + password }
-    let token = jwt.sign(payload, 'secretKey')
-    res.status(200).send({ token })
-}
-else {
-    res.status(405).send("something Went Wrong Try Again");
-}
+    if (udata.email === email && udata.password === password) {
         
-})
+        let payload = { subject: email + password }
+        let token = jwt.sign(payload, 'secretKey')
+        res.status(200).send({token})
+    }  
 
-// app.get('/alumni', function (req, res) {
-
-//     alumnidata.find()
-//         .then(function (alumni) {
-//             res.send(alumni);
-//         });
-// });
-
-
-app.post("/alumni/login", async (req, res) => {
-
-
-
-    const userrole = 0;
-    const email = req.body.email;
-    const password = req.body.password;
-    const udata = await alumnidata.findOne({ email: email })
-
-    if (udata == null) {
-        return res.status(404).send("userdata not present");
-    }
-
-    if (email === admin && password === adminPwd) {
-
-        return res.status(200).send({ email });
-    } if (udata.email === email && udata.password === password) {
-
-        res.status(200).send({ email });
-    }
     else {
         res.status(405).send("something Went Wrong Try Again");
     }
 
-
-
-
-
 })
 
+// app.get('/getdetails',   function (req, res) {
 
+//      alumnidata.find()
+//                 .then(function(alumni){
+//                     res.send(alumni);
+//                 });
+// });
+
+
+app.get('/:email',  (req, res) => {
+  
+    const email = req.params.email;
+    // const id = req.params._id
+      alumnidata.findOne({"email":email})
+      .then((alumni)=>{
+          res.send(alumni);
+      });
+  })
+
+  app.get('/:id',  (req, res) => {
+  
+    // const email = req.params.email;
+    const id = req.params.id
+      alumnidata.findOne({"_id":email})
+      .then((alumni)=>{
+          res.send(alumni);
+      });
+  })
+
+  app.put('/update',(req,res)=>{
+    console.log(req.body)
+    id=req.body._id,
+    uname= req.body.uname,
+    email= req.body.email,
+    password= req.body.password,
+    hq= req.body.hq,
+    city= req.body.city,
+    alumniid=req.body._id
+   alumnidata.findByIdAndUpdate({"_id":id},
+                                {$set:{"name": uname,
+                                   
+                                    "password": password,
+                                    "hq": hq,
+                                    "city": city,
+                                    
+                            }})
+   .then(function(){
+       res.send();
+   })
+ })
 
 
 app.listen(3000, function () {

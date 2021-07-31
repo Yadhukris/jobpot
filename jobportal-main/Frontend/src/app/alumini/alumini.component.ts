@@ -29,10 +29,11 @@ export class AluminiComponent implements OnInit {
     email: '',
     password: '',
     hq: '',
-    city: ''
+    city: '',
+    alumniid:''
   }
 
-  
+
   loginForm = this.fb.group({
 
 
@@ -64,22 +65,30 @@ export class AluminiComponent implements OnInit {
     return this.signupForm.controls;
   }
 
-  ngOnInit(): void {
-    console.log(this)
-  }
+
 
   user = {
     email: '',
     password: ''
   }
 
+
+
   loginUser() {
 
+    this._auth.loginUser(this.user)
+    {
+      localStorage.setItem("getuseremail",this.user.email.toString())
+      console.log(this.user)
+    }
 
     this._auth.loginUser(this.user)
       .subscribe(
         res => {
           localStorage.setItem('token', res.token)
+
+          console.log(this.user)
+          // localStorage.setItem("alumniId", res.id.toString());
           this._router.navigate(['alumni/home'])
         },
         err => {
@@ -89,18 +98,19 @@ export class AluminiComponent implements OnInit {
       )
   }
 
-
-
-
-
-
-
-signupUser() {
-
-  this.alumni.addalumni(this.alumnidetails);
-  console.log("Called");
-  alert("Success");
-  this.routes.navigate([""])
-}
+  ngOnInit(): void {
 
   }
+
+  signupUser() {
+
+    this.alumni.addalumni(this.alumnidetails);
+    console.log("Called");
+    alert("Success");
+    this.routes.navigate([""])
+  }
+
+
+
+
+}
